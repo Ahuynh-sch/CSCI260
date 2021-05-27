@@ -12,7 +12,7 @@ public class EnemyController : MonoBehaviour
     public Transform homePos;
     [SerializeField] private float speed;
     [SerializeField] private float minRange;
-    [SerializeField] private float maxRange;
+    private float maxRange = 5;
     // Start is called before the first frame update
     void Start()
     {
@@ -77,6 +77,15 @@ public class EnemyController : MonoBehaviour
         if (Vector3.Distance(transform.position, homePos.position) == 0)
         {
             anim.SetBool("isMoving", false);
+        }
+
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.tag == "MyWeapon")
+        {
+            Vector2 difference = transform.position - other.transform.position;
+            transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);
         }
     }
 }
